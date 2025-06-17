@@ -1,0 +1,39 @@
+{
+  "scan": {
+    "template_id": "reflected-xss",
+    "template_name": "Reflected Cross-Site Scripting",
+    "author": "pdteam,0xKayala,AmirHossein Raeisi",
+    "description": "",
+    "severity": "medium",
+    "references": [],
+    "tags": "xss,rxss,dast",
+    "vulnerable": true,
+    "results": [
+      {
+        "template_id": "reflected-xss",
+        "template_name": "Reflected Cross-Site Scripting",
+        "author": "pdteam,0xKayala,AmirHossein Raeisi",
+        "description": "",
+        "severity": "medium",
+        "references": [],
+        "tags": "xss,rxss,dast",
+        "target_url": "https://pentest-ground.com:81/\"><86285>",
+        "method": "GET",
+        "status_code": 404,
+        "vulnerable": true,
+        "match_details": [
+          "unnamed: word 'text/html' found in header"
+        ],
+        "response_length": 232,
+        "response_headers": {
+          "Server": "nginx/1.27.5",
+          "Date": "Sat, 14 Jun 2025 14:55:47 GMT",
+          "Content-Type": "text/html; charset=utf-8",
+          "Content-Length": "232",
+          "Connection": "keep-alive"
+        }
+      }
+    ]
+  },
+  "timestamp": "2025-06-14T17:55:48.565936"
+}

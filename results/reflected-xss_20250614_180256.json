@@ -1,0 +1,14 @@
+{
+  "scan": {
+    "template_id": "reflected-xss",
+    "template_name": "Reflected Cross-Site Scripting",
+    "author": "pdteam,0xKayala,AmirHossein Raeisi",
+    "description": "",
+    "severity": "medium",
+    "references": [],
+    "tags": "xss,rxss,dast",
+    "vulnerable": false,
+    "results": []
+  },
+  "timestamp": "2025-06-14T18:02:56.063058"
+}

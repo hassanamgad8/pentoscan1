@@ -1,0 +1,14 @@
+{
+  "scan": {
+    "template_id": "sqli-error-based",
+    "template_name": "Error based SQL Injection",
+    "author": "geeknik,pdteam",
+    "description": "Direct SQL Command Injection is a technique where an attacker creates or alters existing SQL commands to expose hidden data,\nor to override valuable ones, or even to execute dangerous system level commands on the database host.\nThis is accomplished by the application taking user input and combining it with static parameters to build an SQL query .\n",
+    "severity": "critical",
+    "references": [],
+    "tags": "sqli,error,dast",
+    "vulnerable": false,
+    "results": []
+  },
+  "timestamp": "2025-06-14T19:45:40.776875"
+}

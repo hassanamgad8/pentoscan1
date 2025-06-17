@@ -1,0 +1,67 @@
+{
+  "scan": {
+    "template_id": "http-trace",
+    "template_name": "HTTP TRACE method enabled",
+    "author": "nodauf",
+    "description": "",
+    "severity": "info",
+    "references": [
+      "https://www.blackhillsinfosec.com/three-minutes-with-the-http-trace-method/"
+    ],
+    "tags": "miscellaneous,misc,generic",
+    "vulnerable": false,
+    "results": [
+      {
+        "template_id": "http-trace",
+        "template_name": "HTTP TRACE method enabled",
+        "author": "nodauf",
+        "description": "",
+        "severity": "info",
+        "references": [
+          "https://www.blackhillsinfosec.com/three-minutes-with-the-http-trace-method/"
+        ],
+        "tags": "miscellaneous,misc,generic",
+        "target_url": "https://example.com",
+        "method": "TRACE",
+        "status_code": 403,
+        "vulnerable": false,
+        "match_details": [],
+        "response_length": 361,
+        "response_headers": {
+          "Mime-Version": "1.0",
+          "Content-Type": "text/html",
+          "Content-Length": "361",
+          "Cache-Control": "max-age=0",
+          "Date": "Sat, 14 Jun 2025 14:49:13 GMT",
+          "Alt-Svc": "h3=\":443\"; ma=93600,h3-29=\":443\"; ma=93600,quic=\":443\"; ma=93600; v=\"43\"",
+          "Connection": "keep-alive"
+        }
+      },
+      {
+        "template_id": "http-trace",
+        "template_name": "HTTP TRACE method enabled",
+        "author": "nodauf",
+        "description": "",
+        "severity": "info",
+        "references": [
+          "https://www.blackhillsinfosec.com/three-minutes-with-the-http-trace-method/"
+        ],
+        "tags": "miscellaneous,misc,generic",
+        "target_url": "https://example.com",
+        "method": "OPTIONS",
+        "status_code": 501,
+        "vulnerable": false,
+        "match_details": [],
+        "response_length": 19,
+        "response_headers": {
+          "Content-Length": "19",
+          "Cache-Control": "max-age=3600",
+          "Date": "Sat, 14 Jun 2025 14:49:13 GMT",
+          "Alt-Svc": "h3=\":443\"; ma=93600,h3-29=\":443\"; ma=93600,quic=\":443\"; ma=93600; v=\"43\"",
+          "Connection": "keep-alive"
+        }
+      }
+    ]
+  },
+  "timestamp": "2025-06-14T17:49:14.936222"
+}

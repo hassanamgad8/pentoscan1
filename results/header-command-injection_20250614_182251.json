@@ -1,0 +1,14 @@
+{
+  "scan": {
+    "template_id": "header-command-injection",
+    "template_name": "Header - Remote Command Injection",
+    "author": "geeknik",
+    "description": "Headers were tested for remote command injection vulnerabilities.",
+    "severity": "critical",
+    "references": [],
+    "tags": "fuzz,rce,fuzzing",
+    "vulnerable": false,
+    "results": []
+  },
+  "timestamp": "2025-06-14T18:22:51.363459"
+}

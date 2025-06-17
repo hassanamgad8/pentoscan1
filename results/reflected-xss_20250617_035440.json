@@ -1,0 +1,50 @@
+{
+  "scan": {
+    "template_id": "reflected-xss",
+    "template_name": "Reflected Cross-Site Scripting",
+    "author": "pdteam,0xKayala,AmirHossein Raeisi",
+    "description": "",
+    "severity": "medium",
+    "references": [],
+    "tags": "xss,rxss,dast",
+    "vulnerable": true,
+    "results": [
+      {
+        "template_id": "reflected-xss",
+        "template_name": "Reflected Cross-Site Scripting",
+        "author": "pdteam,0xKayala,AmirHossein Raeisi",
+        "description": "",
+        "severity": "medium",
+        "references": [],
+        "tags": "xss,rxss,dast",
+        "target_url": "http://127.0.0.1:3000/?q=%22%3E%3C%7B%7Brand_int%2810000%2C+99999%29%7D%7D%3E",
+        "method": "GET",
+        "status_code": 200,
+        "vulnerable": true,
+        "match_details": [
+          "Matched words in header"
+        ],
+        "response_length": 80117,
+        "response_headers": {
+          "Access-Control-Allow-Origin": "*",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "SAMEORIGIN",
+          "Feature-Policy": "payment 'self'",
+          "X-Recruiting": "/#/jobs",
+          "Accept-Ranges": "bytes",
+          "Cache-Control": "public, max-age=0",
+          "Last-Modified": "Tue, 17 Jun 2025 00:39:25 GMT",
+          "ETag": "W/\"138f5-1977b53999b\"",
+          "Content-Type": "text/html; charset=UTF-8",
+          "Vary": "Accept-Encoding",
+          "Content-Encoding": "gzip",
+          "Date": "Tue, 17 Jun 2025 00:54:40 GMT",
+          "Connection": "keep-alive",
+          "Keep-Alive": "timeout=5",
+          "Transfer-Encoding": "chunked"
+        }
+      }
+    ]
+  },
+  "timestamp": "2025-06-17T03:54:40.837458"
+}

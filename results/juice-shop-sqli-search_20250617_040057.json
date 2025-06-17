@@ -1,0 +1,53 @@
+{
+  "scan": {
+    "template_id": "juice-shop-sqli-search",
+    "template_name": "Juice Shop SQLi \u2013 product search",
+    "author": "PentoScan",
+    "description": "Detects SQL injection vulnerability in Juice Shop's product search functionality by attempting to extract user data",
+    "severity": "high",
+    "references": [],
+    "tags": [
+      "juice-shop",
+      "sqli",
+      "product-search",
+      "api"
+    ],
+    "vulnerable": false,
+    "results": [
+      {
+        "template_id": "juice-shop-sqli-search",
+        "template_name": "Juice Shop SQLi \u2013 product search",
+        "author": "PentoScan",
+        "description": "Detects SQL injection vulnerability in Juice Shop's product search functionality by attempting to extract user data",
+        "severity": "high",
+        "references": [],
+        "tags": [
+          "juice-shop",
+          "sqli",
+          "product-search",
+          "api"
+        ],
+        "target_url": "http://localhost:3000/rest/products/search?q=' OR 1=1--",
+        "method": "GET",
+        "status_code": 500,
+        "vulnerable": false,
+        "match_details": [],
+        "response_length": 942,
+        "response_headers": {
+          "Access-Control-Allow-Origin": "*",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "SAMEORIGIN",
+          "Feature-Policy": "payment 'self'",
+          "X-Recruiting": "/#/jobs",
+          "Content-Type": "text/html; charset=utf-8",
+          "Vary": "Accept-Encoding",
+          "Date": "Tue, 17 Jun 2025 01:00:57 GMT",
+          "Connection": "keep-alive",
+          "Keep-Alive": "timeout=5",
+          "Transfer-Encoding": "chunked"
+        }
+      }
+    ]
+  },
+  "timestamp": "2025-06-17T04:00:57.817775"
+}

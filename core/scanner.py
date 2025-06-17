@@ -1,99 +1,96 @@
-import re
 import logging
 import requests
-from urllib.parse import urljoin
+import re
+import json
+from urllib.parse import urljoin, urlparse, parse_qs, urlencode
+from typing import Dict, Any, List, Tuple
+from py_mini_racer import MiniRacer
 
 logger = logging.getLogger(__name__)
 
-class ScannerError(Exception):
-    """Custom exception for scanner-related errors"""
-    pass
+def execute_javascript(template, response):
+    """Execute JavaScript code from template against response."""
+    if not template.javascript:
+        return None
+        
+    try:
+        # Get raw headers as string
+        raw_headers = "\r\n".join(f"{k}: {v}" for k, v in response.headers.items())
+        
+        # Create V8 context
+        ctx = MiniRacer()
+        
+        # Prepare JavaScript code with headers
+        js_code = f"""
+        var template = {{ http_all_headers: {json.dumps(raw_headers)} }};
+        {template.javascript[0]["code"]}
+        """
+        
+        # Execute the JavaScript code
+        cookie_names = ctx.eval(js_code)
+        
+        # Apply extractors if any
+        findings = []
+        if template.extractors:
+            for cookie in cookie_names:
+                for extractor in template.extractors:
+                    if extractor["type"] == "regex":
+                        for pattern in extractor["regex"]:
+                            if re.match(pattern, cookie):
+                                findings.append({
+                                    "template_id": template.id,
+                                    "cookie_name": cookie,
+                                    "pattern": pattern
+                                })
+        
+        return findings
+    except Exception as e:
+        logging.error(f"Error executing JavaScript: {str(e)}")
+        return None
 
 def match_response(response, matcher):
-    """
-    Match response content against a matcher
-    
-    Args:
-        response (requests.Response): Response object
-        matcher (dict): Matcher configuration
-        
-    Returns:
-        bool: True if match found, False otherwise
-    """
-    matcher_type = matcher['type']
-    
-    if matcher_type == 'word':
-        for word in matcher['words']:
-            if word in response.text:
-                return True
-        return False
-    
-    elif matcher_type == 'status':
-        return response.status_code == matcher['status']
-    
-    elif matcher_type == 'regex':
-        pattern = re.compile(matcher['regex'])
-        return bool(pattern.search(response.text))
-    
+    """Match response against the given matcher."""
+    if matcher["type"] == "word":
+        return any(word in response.text for word in matcher["words"])
+    elif matcher["type"] == "status":
+        return response.status_code in matcher["status"]
+    elif matcher["type"] == "regex":
+        return any(re.search(pattern, response.text) for pattern in matcher["regex"])
     return False
 
-def run_scan(target_url, template):
-    """
-    Run a scan using the provided template
+def run_scan(target_url: str, template: Dict[str, Any]) -> Dict[str, Any]:
+    """Run a scan using the provided template."""
+    results = []
     
-    Args:
-        target_url (str): Target URL to scan
-        template (dict): Scan template
-        
-    Returns:
-        dict: Scan results including vulnerability status
-    """
     try:
-        # Prepare request
-        scan_config = template['scan']
-        method = scan_config['method'].upper()
-        path = scan_config['path']
-        url = urljoin(target_url, path)
-        
-        # Make request
-        logger.info(f"Sending {method} request to {url}")
-        response = requests.request(
-            method=method,
-            url=url,
-            timeout=10,
-            verify=False  # Allow self-signed certificates
-        )
-        
-        # Check matchers
-        vulnerable = False
-        for matcher in scan_config['matchers']:
-            if match_response(response, matcher):
-                vulnerable = True
-                break
-        
-        # Prepare results
-        result = {
-            'template_id': template['id'],
-            'template_name': template['name'],
-            'severity': template['severity'],
-            'target_url': url,
-            'method': method,
-            'status_code': response.status_code,
-            'vulnerable': vulnerable,
-            'response_length': len(response.text)
-        }
-        
-        # Run exploit module if specified and vulnerable
-        if vulnerable and 'exploit_module' in template:
-            try:
-                # TODO: Implement dynamic module loading
-                logger.info(f"Vulnerability found, would run exploit module: {template['exploit_module']}")
-            except Exception as e:
-                logger.error(f"Failed to run exploit module: {str(e)}")
-        
-        return result
-        
-    except requests.RequestException as e:
-        raise ScannerError(f"Request failed: {str(e)}")
+        # Handle HTTP requests
+        if "http" in template:
+            for http_req in template["http"]:
+                method = http_req.get("method", "GET")
+                paths = http_req.get("path", [])
+                
+                for path in paths:
+                    url = urljoin(target_url, path)
+                    response = requests.request(method, url)
+                    
+                    # Execute JavaScript if present
+                    if "javascript" in template:
+                        js_findings = execute_javascript(template, response)
+                        if js_findings:
+                            results.extend(js_findings)
+                    
+                    # Check matchers
+                    if "matchers" in http_req:
+                        for matcher in http_req["matchers"]:
+                            if match_response(response, matcher):
+                                results.append({
+                                    "template_id": template["id"],
+                                    "url": url,
+                                    "status": response.status_code,
+                                    "matcher": matcher
+                                })
+                                
     except Exception as e:
-        raise ScannerError(f"Scan failed: {str(e)}")
+        logging.error(f"Error during scan: {str(e)}")
+        
+    return results

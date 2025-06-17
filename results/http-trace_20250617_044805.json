@@ -1,0 +1,16 @@
+{
+  "scan": {
+    "template_id": "http-trace",
+    "template_name": "HTTP TRACE method enabled",
+    "author": "pentoscan",
+    "description": "",
+    "severity": "info",
+    "references": [
+      "https://www.blackhillsinfosec.com/three-minutes-with-the-http-trace-method/"
+    ],
+    "tags": "miscellaneous,misc,generic",
+    "vulnerable": false,
+    "results": []
+  },
+  "timestamp": "2025-06-17T04:48:05.092921"
+}

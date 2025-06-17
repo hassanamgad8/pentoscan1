@@ -1,0 +1,18 @@
+{
+  "scan": {
+    "template_id": "juice-shop-sqli-search",
+    "template_name": "Juice Shop SQLi \u2013 product search",
+    "author": "PentoScan",
+    "description": "Detects SQL injection vulnerability in Juice Shop's product search functionality",
+    "severity": "high",
+    "references": [],
+    "tags": [
+      "sqli",
+      "juice-shop",
+      "product-search"
+    ],
+    "vulnerable": false,
+    "results": []
+  },
+  "timestamp": "2025-06-17T03:57:45.154393"
+}

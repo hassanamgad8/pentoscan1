@@ -59,6 +59,27 @@ def run_pentoscan():
     except Exception as e:
         print(f"Failed to run PentoScan: {e}")
 
+def test_cookies_without_secure(tmp_path, httpserver):
+    """Test detection of cookies without Secure attribute."""
+    # Set up test server with both secure and non-secure cookies
+    httpserver.expect_request("/").respond_with_data(
+        "", headers=[
+            ("Set-Cookie", "foo=bar"),
+            ("Set-Cookie", "secure=1; Secure")
+        ]
+    )
+    
+    # Run scan
+    results = run_scan(
+        target=httpserver.url,
+        template_path="templates/cookies-without-secure.yaml"
+    )
+    
+    # Verify results
+    cookie_names = [r["cookie_name"] for r in results]
+    assert "foo" in cookie_names, "Should detect non-secure cookie"
+    assert "secure" not in cookie_names, "Should not detect secure cookie"
+
 def main():
     print("Setting up test environment...")
     setup_test_env()
